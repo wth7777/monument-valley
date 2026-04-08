@@ -1,0 +1,17 @@
+# Godot
+.godot/
+*.import
+export_presets.cfg
+templates.tpz
+
+# Build outputs
+builds/
+*.apk
+*.aab
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config
+local.properties

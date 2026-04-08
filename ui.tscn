@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://ui123"]
+
+[ext_resource type="Script" path="res://ui.gd" id="1_ui"]
+[ext_resource type="Font" path="res://icon.svg" id="2_font"]
+
+[node name="UI" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_ui")
+
+[node name="LevelLabel" type="Label" parent="."]
+position = Vector2(20, 20)
+size = Vector2(200, 30)
+text = "Level 1: The Beginning"
+align = 0
+valign = 0
+
+[node name="Instructions" type="Label" parent="."]
+position = Vector2(20, 60)
+size = Vector2(300, 40)
+text = "Use arrow keys to move"
+align = 0
+valign = 0
+
+[node name="VictoryLabel" type="Label" parent="."]
+position = Vector2(20, 100)
+size = Vector2(300, 50)
+text = "Congratulations!"
+align = 0
+valign = 0
+visible = false

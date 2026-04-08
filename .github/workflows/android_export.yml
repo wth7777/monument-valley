@@ -1,0 +1,43 @@
+name: Android Export
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Godot
+        uses: barthere/godot-action@v1
+        with:
+          godot-version: "4.4.stable"
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+      
+      - name: Export Android APK
+        run: |
+          mkdir -p builds/android
+          godot4 --headless --export-release "Android" builds/android/MonumentValley.apk
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MonumentValley.apk
+          path: builds/android/MonumentValley.apk

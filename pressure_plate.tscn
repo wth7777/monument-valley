@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://pressure_plate"]
+
+[ext_resource type="Script" path="res://pressure_plate.gd" id="1"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="2"]
+
+[node name="PressurePlate" type="Area2D"]
+script = ExtResource("1")
+collision_layer = 1
+collision_mask = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2")
+scale = Vector2(0.5, 0.5)
+z_index = -1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("3")
+
+[node name="PulseTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = false
+one_shot = false
+
+[sub_resource type="CircleShape2D" id="3"]
+radius = 24.0
