@@ -26,6 +26,29 @@ jobs:
         wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
         unzip -q Godot_v4.4-stable_export_templates.tpz -d ~/.local/share/godot/templates/4.4.stable/
     
+    - name: Create export preset
+      run: |
+        mkdir -p ~/.local/share/godot/templates/4.4.stable
+        cat > export_presets.cfg << 'EOFEOF'
+[config]
+name="Android"
+platform="Android"
+custom_features=""
+release="true"
+export_path="res://builds/android/MonumentValley.apk"
+
+[android]
+keystore="debug"
+application="com.tom.monumentvalley"
+version_code="1"
+version_string="1.0"
+main_orientation="portrait"
+upi_support="false"
+architectures="armeabi-v7a"
+use_size_apk="true"
+EOFEOF
+        mv export_presets.cfg .
+    
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
