@@ -20,6 +20,12 @@ jobs:
         mv Godot_v4.4-stable_linux.x86_64 godot4
         chmod +x godot4
     
+    - name: Install Android Export Templates
+      run: |
+        mkdir -p ~/.local/share/godot/templates/4.4.stable
+        wget -q https://downloads.tuxfamily.org/godotengine/4.4/Godot_v4.4-stable_export_templates.tpz
+        unzip -q Godot_v4.4-stable_export_templates.tpz -d ~/.local/share/godot/templates/4.4.stable/
+    
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
