@@ -22,9 +22,9 @@ jobs:
     
     - name: Install Android Export Templates
       run: |
-        mkdir -p ~/.local/share/godot/templates/4.4.stable
+        mkdir -p ~/.local/share/godot/export_templates/4.4.stable
         wget -q https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
-        unzip -q Godot_v4.4-stable_export_templates.tpz -d ~/.local/share/godot/templates/4.4.stable/
+        unzip -q Godot_v4.4-stable_export_templates.tpz -d ~/.local/share/godot/export_templates/4.4.stable/
     
     - name: Create export preset
       run: |
