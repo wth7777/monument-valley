@@ -27,7 +27,8 @@ jobs:
         unzip -q Godot_v4.4-stable_export_templates.tpz -d ~/.local/share/godot/templates/4.4.stable/
     
     - name: Create export preset
-      run: python3 -c "print('[config]\nname=\"Android\"\nplatform=\"Android\"\ncustom_features=\"\"\nrelease=\"true\"\nexport_path=\"res://builds/android/MonumentValley.apk\"\n\n[android]\nkeystore=\"debug\"\napplication=\"com.tom.monumentvalley\"\nversion_code=\"1\"\nversion_string=\"1.0\"\nmain_orientation=\"portrait\"\nupi_support=\"false\"\narchitectures=\"armeabi-v7a\"\nuse_size_apk=\"true\"')" > export_presets.cfg
+      run: |
+        echo "W3ByZXNldC4wXQoKbmFtZT0iQW5kcm9pZCIKcGxhdGZvcm09IkFuZHJvaWQiCnJ1bm5hYmxlPXRydWUKZGVkaWNhdGVkX3NlcnZlcj1mYWxzZQpjdXN0b21fZmVhdHVyZXM9IiIKZXhwb3J0X2ZpbHRlcj0iYWxsX3Jlc291cmNlcyIKaW5jbHVkZV9maWx0ZXI9IiIKZXhjbHVkZV9maWx0ZXI9IiIKZXhwb3J0X3BhdGg9InJlczovL2J1aWxkcy9hbmRyb2lkL01vbnVtZW50VmFsbGV5LmFwayIKZW5jcnlwdGlvbl9pbmNsdWRlX2ZpbHRlcnM9IiIKZW5jcnlwdGlvbl9leGNsdWRlX2ZpbHRlcnM9IiIKZW5jcnlwdF9wY2s9ZmFsc2UKZW5jcnlwdF9kaXJlY3Rvcnk9ZmFsc2UKCltwcmVzZXQuMC5vcHRpb25zXQoKY3VzdG9tX3RlbXBsYXRlL2RlYnVnPSIiCmN1c3RvbV90ZW1wbGF0ZS9yZWxlYXNlPSIiCnZhcmlhbnQvZXh0ZW5zaW9uc19zdXBwb3J0PWZhbHNlCnZyYW1fdGV4dHVyZV9jb21wcmVzc2lvbi9mb3JfZGVza3RvcD10cnVlCnZyYW1fdGV4dHVyZV9jb21wcmVzc2lvbi9mb3JfbW9iaWxlPWZhbHNlCg==" | base64 -d > export_presets.cfg
     
     - name: Setup Java
       uses: actions/setup-java@v4
