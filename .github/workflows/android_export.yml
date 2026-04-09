@@ -29,24 +29,22 @@ jobs:
     - name: Create export preset
       run: |
         mkdir -p ~/.local/share/godot/templates/4.4.stable
-        cat > export_presets.cfg << 'EOFEOF'
-[config]
-name="Android"
-platform="Android"
-custom_features=""
-release="true"
-export_path="res://builds/android/MonumentValley.apk"
-
-[android]
-keystore="debug"
-application="com.tom.monumentvalley"
-version_code="1"
-version_string="1.0"
-main_orientation="portrait"
-upi_support="false"
-architectures="armeabi-v7a"
-use_size_apk="true"
-EOFEOF
+        echo '[config]' > export_presets.cfg
+        echo 'name="Android"' >> export_presets.cfg
+        echo 'platform="Android"' >> export_presets.cfg
+        echo 'custom_features=""' >> export_presets.cfg
+        echo 'release="true"' >> export_presets.cfg
+        echo 'export_path="res://builds/android/MonumentValley.apk"' >> export_presets.cfg
+        echo '' >> export_presets.cfg
+        echo '[android]' >> export_presets.cfg
+        echo 'keystore="debug"' >> export_presets.cfg
+        echo 'application="com.tom.monumentvalley"' >> export_presets.cfg
+        echo 'version_code="1"' >> export_presets.cfg
+        echo 'version_string="1.0"' >> export_presets.cfg
+        echo 'main_orientation="portrait"' >> export_presets.cfg
+        echo 'upi_support="false"' >> export_presets.cfg
+        echo 'architectures="armeabi-v7a"' >> export_presets.cfg
+        echo 'use_size_apk="true"' >> export_presets.cfg
         mv export_presets.cfg .
     
     - name: Setup Java
