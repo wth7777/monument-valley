@@ -1,42 +1,55 @@
-name: Android Export
+name: Android - Google Play Release
 
 on:
   push:
-    branches: [main, master]
-  workflow_dispatch:
+    tags:
+      - 'v*.*.*'
 
 jobs:
-  export:
+  export-android:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
+    - name: Clone Repository
       uses: actions/checkout@v4
     
-    - name: Setup Godot
-      uses: firebelley/godot-export@v7.0.0
-      with:
-        godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_linux.x86_64.zip
-        godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.4-stable/Godot_v4.4-stable_export_templates.tpz
-        presets_to_export: Android
+    - name: Load environment variables
+      run: |
+        cat .env >> $GITHUB_ENV
+        echo ".env Loaded."
     
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: temurin
-        java-version: '17'
+    - name: Install Godot and templates
+      run: |
+        echo "Downloading Godot: ${GODOT_VERSION}..."
+        wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip
+        wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_export_templates.tpz
+        
+        echo "Installing Godot Editor..."
+        unzip -q Godot_v${GODOT_VERSION}_linux.x86_64.zip
+        sudo mv Godot_v${GODOT_VERSION}_linux.x86_64 /usr/local/bin/godot
+        sudo chmod +x /usr/local/bin/godot
+        
+        # Read the template version directly from the project for perfect synchronization
+        TEMPLATE_FOLDER=$(cat android/.build_version | tr -d '\r\n')
+        
+        echo "Installing Godot Export Templates..."
+        mkdir -p ~/.local/share/godot/export_templates/${TEMPLATE_FOLDER}
+        unzip -q Godot_v${GODOT_VERSION}_export_templates.tpz
+        mv templates/* ~/.local/share/godot/export_templates/${TEMPLATE_FOLDER}/
     
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+    ## Pre-heating step
+    - name: Pre-heat Godot project
+      run: |
+        godot --headless --editor --quit || true
+        echo "Pre-heating complete - .godot/ cache generated"
     
-    - name: Create local.properties
-      run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+    - name: Export Android Release
+      run: |
+        godot --headless --export-release "Android - Google Play"
+        echo "Export completed"
     
-    - name: Export Android APK
-      run: godot --headless --export-release "Android"
-    
-    - name: Upload APK
+    - name: Upload Release Asset
       uses: actions/upload-artifact@v4
       with:
-        name: MonumentValley.apk
-        path: exports/Android/MonumentValley.apk
+        name: MonumentValley-release.apk
+        path: exports/Android\ -\ Google\ Play/MonumentValley.apk
